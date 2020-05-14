@@ -312,11 +312,18 @@ class LineChart extends AbstractChart {
     const datas = this.getDatas(data);
     const baseHeight = this.calcBaseHeight(datas, height);
     return config.data.map((dataset, index) => {
+     const realValues = [];
+     for(let j = 0; j < dataset.data.length; j++) {
+     if (!this.props.hidePointsAtIndex.includes(j)) {
+       realValues.push(dataset.data[j]);
+       }
+     }
+     console.log(realValues);
       return (
         <Polygon
           key={index}
           points={
-            dataset.data
+            realValues
               .map((d, i) => {
                 const x =
                   paddingRight +
@@ -329,7 +336,7 @@ class LineChart extends AbstractChart {
               .join(" ") +
             ` ${paddingRight +
               ((width - paddingRight) / dataset.data.length) *
-                (dataset.data.length - 1)},${(height / 4) * 3 +
+                (realValues.length - 1)},${(height / 4) * 3 +
               paddingTop} ${paddingRight},${(height / 4) * 3 + paddingTop}`
           }
           fill={`url(#fillShadowGradient${useColorFromDataset ? `_${index}` : ''})`}
@@ -357,6 +364,9 @@ class LineChart extends AbstractChart {
     const baseHeight = this.calcBaseHeight(datas, height);
     data.forEach((dataset, index) => {
       const points = dataset.data.map((d, i) => {
+        if (this.props.hidePointsAtIndex.includes(i)) {
+          return '';
+        }
         const x =
           (i * (width - paddingRight)) / dataset.data.length + paddingRight;
         const y =

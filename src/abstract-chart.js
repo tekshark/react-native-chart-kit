@@ -173,9 +173,7 @@ class AbstractChart extends Component {
       fac = 0.71;
     }
     return labels.map((label, i) => {
-      if (hidePointsAtIndex.includes(i)) {
-        return null;
-      }
+      
       const x =
         (((width - paddingRight) / labels.length) * i +
           paddingRight +

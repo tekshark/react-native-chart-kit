@@ -1,6 +1,6 @@
 {
   "name": "react-native-chart-kit",
-  "version": "5.5.0",
+  "version": "5.5.1",
   "devDependencies": {
     "babel-eslint": "10.x",
     "babel-plugin-module-resolver": "^3.1.1",
@@ -50,5 +50,16 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
-  }
+  },
+  "description": "If you're looking to **build a website or a cross-platform mobile app** – we will be happy to help you! Send a note to clients@ui1.io and we will be in touch with you shortly.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tekshark/react-native-chart-kit.git"
+  },
+  "author": "“iplusService” <“assistenza@iplusservice.it”>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tekshark/react-native-chart-kit/issues"
+  },
+  "homepage": "https://github.com/tekshark/react-native-chart-kit#readme"
 }
