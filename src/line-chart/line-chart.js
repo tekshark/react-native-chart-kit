@@ -318,7 +318,6 @@ class LineChart extends AbstractChart {
        realValues.push(dataset.data[j]);
        }
      }
-     console.log(realValues);
       return (
         <Polygon
           key={index}
@@ -413,6 +412,9 @@ class LineChart extends AbstractChart {
           const y_mid = (y(i) + y(i + 1)) / 2;
           const cp_x1 = (x_mid + x(i)) / 2;
           const cp_x2 = (x_mid + x(i + 1)) / 2;
+          if (this.props.hidePointsAtIndex.includes(i+1)) {
+            return '';
+          }
           return (
             `Q ${cp_x1}, ${y(i)}, ${x_mid}, ${y_mid}` +
             ` Q ${cp_x2}, ${y(i + 1)}, ${x(i + 1)}, ${y(i + 1)}`
@@ -440,11 +442,17 @@ class LineChart extends AbstractChart {
   renderBezierShadow = config => {
     const { width, height, paddingRight, paddingTop, data, useColorFromDataset } = config;
     return data.map((dataset, index) => {
+      const realValues = [];
+      for(let j = 0; j < dataset.data.length; j++) {
+        if (!this.props.hidePointsAtIndex.includes(j)) {
+          realValues.push(dataset.data[j]);
+        }
+      }
       const d =
         this.getBezierLinePoints(dataset, config) +
         ` L${paddingRight +
           ((width - paddingRight) / dataset.data.length) *
-            (dataset.data.length - 1)},${(height / 4) * 3 +
+            (realValues.length - 1)},${(height / 4) * 3 +
           paddingTop} L${paddingRight},${(height / 4) * 3 + paddingTop} Z`;
       return (
         <Path
@@ -496,24 +504,26 @@ class LineChart extends AbstractChart {
       formatXLabel = xLabel => xLabel,
       segments,
       transparent = false,
-      chartConfig = {},
+      chartConfig = {}
     } = this.props;
     const { scrollableDotHorizontalOffset } = this.state;
     const { labels = [] } = data;
+    let freeOnTop = this.props.chartConfig.style.freeSpaceOnTop ? this.props.chartConfig.style.freeSpaceOnTop : 0;
+
     const {
       borderRadius = 0,
-      paddingTop = 16,
+      paddingTop = 16 + freeOnTop,
       paddingRight = 64,
       margin = 0,
       marginRight = 0,
-      paddingBottom = 0
+      paddingBottom = 0,
     } = style;
 
     const config = {
       width,
       height,
       verticalLabelRotation,
-      horizontalLabelRotation
+      horizontalLabelRotation,
     };
 
     const datas = this.getDatas(data.datasets);
@@ -524,16 +534,15 @@ class LineChart extends AbstractChart {
     }
 
     const legendOffset = this.props.data.legend ? height * 0.15 : 0;
-
     return (
       <View style={style}>
         <Svg
-          height={height + paddingBottom + legendOffset}
+          height={height + paddingBottom + legendOffset + freeOnTop}
           width={width - margin * 2 - marginRight}
         >
           <Rect
             width="100%"
-            height={height + legendOffset}
+            height={height + legendOffset + freeOnTop}
             rx={borderRadius}
             ry={borderRadius}
             fill="url(#backgroundGradient)"
