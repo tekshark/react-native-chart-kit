@@ -4,10 +4,18 @@ import { LinearGradient, Line, Text, Defs, Stop } from "react-native-svg";
 
 class AbstractChart extends Component {
   calcScaler = data => {
-    if (this.props.fromZero) {
-      return Math.max(...data, 0) - Math.min(...data, 0) || 1;
+    if(this.props.toX){
+      if (this.props.fromZero) {
+        return this.props.toX - Math.min(...data, 0) || 1;
+      } else {
+        return this.props.toX - Math.min(...data) || 1;
+      }
     } else {
-      return Math.max(...data) - Math.min(...data) || 1;
+      if (this.props.fromZero) {
+        return Math.max(...data, 0) - Math.min(...data, 0) || 1;
+      } else {
+        return Math.max(...data) - Math.min(...data) || 1;
+      }
     }
   };
 
@@ -42,7 +50,7 @@ class AbstractChart extends Component {
   getPropsForBackgroundLines() {
     const { propsForBackgroundLines = {} } = this.props.chartConfig;
     return {
-      stroke: this.props.chartConfig.color(0.2),
+      stroke: this.props.chartConfig.color(this.props.chartConfig.backgroundLineOpacity),
       strokeDasharray: "5, 10",
       strokeWidth: 1,
       ...propsForBackgroundLines
@@ -114,7 +122,6 @@ class AbstractChart extends Component {
 
     return [...Array(count === 1 ? 1 : count + 1).keys()].map((i, _) => {
       let yLabel = i * count;
-
       if (count === 1) {
         yLabel = `${yAxisLabel}${formatYLabel(
           data[0].toFixed(decimalPlaces)
@@ -165,7 +172,8 @@ class AbstractChart extends Component {
     const {
       xAxisLabel = "",
       xLabelsOffset = 0,
-      hidePointsAtIndex = []
+      hidePointsAtIndex = [],
+      labelVerticalInterval = 1
     } = this.props;
     const fontSize = 12;
     let fac = 1;
@@ -173,13 +181,19 @@ class AbstractChart extends Component {
       fac = 0.71;
     }
     return labels.map((label, i) => {
-      
       const x =
         (((width - paddingRight) / labels.length) * i +
           paddingRight +
           horizontalOffset) *
         fac;
       const y = (height * 3) / 4 + paddingTop + fontSize * 2 + xLabelsOffset;
+      let labelShow
+      if(i % labelVerticalInterval === 0){
+        labelShow = formatXLabel(label) + "" + xAxisLabel;
+      }
+      else{
+        labelShow = '';
+      }
       return (
         <Text
           origin={`${x}, ${y}`}
@@ -190,7 +204,7 @@ class AbstractChart extends Component {
           textAnchor={verticalLabelRotation === 0 ? "middle" : "start"}
           {...this.getPropsForLabels()}
         >
-          {`${formatXLabel(label)}${xAxisLabel}`}
+          {labelShow}
         </Text>
       );
     });
@@ -241,7 +255,11 @@ class AbstractChart extends Component {
       height,
       backgroundGradientFrom,
       backgroundGradientTo,
+      backgroundGradientMiddle,
       useShadowColorFromDataset,
+      backgroundOffsetFrom,
+      backgroundOffsetMiddle,
+      backgroundOffsetTo,
       data
     } = config;
     const fromOpacity = config.hasOwnProperty("backgroundGradientFromOpacity")
@@ -264,21 +282,21 @@ class AbstractChart extends Component {
     return (
       <Defs>
         <LinearGradient
-          id="backgroundGradient"
-          x1="0"
-          y1={height}
-          x2={width}
-          y2={0}
-        >
+            id="backgroundGradient"
+            x1="0%"
+            y1="0%"
+            x2="0%"
+            y2="100%">
+          <Stop offset={backgroundOffsetFrom} stopColor={backgroundGradientFrom} stopOpacity="1" />
           <Stop
-            offset="0"
-            stopColor={backgroundGradientFrom}
-            stopOpacity={fromOpacity}
+              offset={backgroundOffsetMiddle}
+              stopColor={backgroundGradientMiddle}
+              stopOpacity="1"
           />
           <Stop
-            offset="1"
-            stopColor={backgroundGradientTo}
-            stopOpacity={toOpacity}
+              offset={backgroundOffsetTo}
+              stopColor={backgroundGradientTo}
+              stopOpacity="1"
           />
         </LinearGradient>
         {
