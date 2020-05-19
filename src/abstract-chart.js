@@ -56,7 +56,6 @@ class AbstractChart extends Component {
       ...propsForBackgroundLines
     };
   }
-
   getPropsForLabels() {
     const {
       propsForLabels = {},
@@ -65,6 +64,7 @@ class AbstractChart extends Component {
     } = this.props.chartConfig;
     return {
       fontSize: 12,
+      fontFamily: this.props.chartConfig.style.fontFamily,
       fill: labelColor(0.8),
       ...propsForLabels
     };
