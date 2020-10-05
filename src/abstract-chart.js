@@ -112,8 +112,7 @@ class AbstractChart extends Component {
       paddingRight,
       horizontalLabelRotation = 0,
       decimalPlaces = 2,
-      formatYLabel = yLabel => yLabel,
-      roundLabelTo = 1
+      formatYLabel = yLabel => yLabel
     } = config;
     const {
       yAxisLabel = "",
@@ -129,8 +128,8 @@ class AbstractChart extends Component {
         )}${yAxisSuffix}`;
       } else {
         const label = this.props.fromZero
-          ? (Math.floor(((this.calcScaler(data) / count) * i)/roundLabelTo)) * roundLabelTo + Math.min(...data, 0)
-          : (Math.floor(((this.calcScaler(data) / count) * i)/roundLabelTo)) * roundLabelTo + Math.min(...data);
+          ? (this.calcScaler(data) / count) * i + Math.min(...data, 0)
+          : (this.calcScaler(data) / count) * i + Math.min(...data);
         yLabel = `${yAxisLabel}${formatYLabel(
           label.toFixed(decimalPlaces)
         )}${yAxisSuffix}`;

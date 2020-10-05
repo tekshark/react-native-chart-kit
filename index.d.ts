@@ -384,7 +384,6 @@ export interface ChartConfig {
   propsForDots?: CircleProps;
   decimalPlaces?: number;
   style?: ViewStyle;
-  roundLabelTo?: number;
 
   /**
    * Define stroke line join type

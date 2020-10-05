@@ -581,8 +581,7 @@ class LineChart extends AbstractChart {
                   paddingTop,
                   paddingRight,
                   formatYLabel,
-                  decimalPlaces: chartConfig.decimalPlaces,
-                  roundLabelTo: chartConfig.roundLabelTo
+                  decimalPlaces: chartConfig.decimalPlaces
                 })
                 : null}
             </G>
@@ -688,3 +687,4 @@ class LineChart extends AbstractChart {
 }
 
 export default LineChart;
+
