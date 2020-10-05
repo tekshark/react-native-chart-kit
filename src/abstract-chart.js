@@ -112,7 +112,8 @@ class AbstractChart extends Component {
       paddingRight,
       horizontalLabelRotation = 0,
       decimalPlaces = 2,
-      formatYLabel = yLabel => yLabel
+      formatYLabel = yLabel => yLabel,
+      roundLabelTo = 1
     } = config;
     const {
       yAxisLabel = "",
@@ -128,13 +129,12 @@ class AbstractChart extends Component {
         )}${yAxisSuffix}`;
       } else {
         const label = this.props.fromZero
-          ? (this.calcScaler(data) / count) * i + Math.min(...data, 0)
-          : (this.calcScaler(data) / count) * i + Math.min(...data);
+          ? (Math.ceil(((this.calcScaler(data) / count) * i)/roundLabelTo)) * roundLabelTo + Math.min(...data, 0)
+          : (Math.ceil(((this.calcScaler(data) / count) * i)/roundLabelTo)) * roundLabelTo + Math.min(...data);
         yLabel = `${yAxisLabel}${formatYLabel(
           label.toFixed(decimalPlaces)
         )}${yAxisSuffix}`;
       }
-
       const basePosition = height - height / 4;
       const x = paddingRight - yLabelsOffset;
       const y =
@@ -220,12 +220,12 @@ class AbstractChart extends Component {
             key={Math.random()}
             x1={Math.floor(
               ((width - paddingRight) / (data.length / yAxisInterval)) * i +
-                paddingRight
+              paddingRight
             )}
             y1={0}
             x2={Math.floor(
               ((width - paddingRight) / (data.length / yAxisInterval)) * i +
-                paddingRight
+              paddingRight
             )}
             y2={height - height / 4 + paddingTop}
             {...this.getPropsForBackgroundLines()}
@@ -282,21 +282,21 @@ class AbstractChart extends Component {
     return (
       <Defs>
         <LinearGradient
-            id="backgroundGradient"
-            x1="0%"
-            y1="0%"
-            x2="0%"
-            y2="100%">
+          id="backgroundGradient"
+          x1="0%"
+          y1="0%"
+          x2="0%"
+          y2="100%">
           <Stop offset={backgroundOffsetFrom} stopColor={backgroundGradientFrom} stopOpacity="1" />
           <Stop
-              offset={backgroundOffsetMiddle}
-              stopColor={backgroundGradientMiddle}
-              stopOpacity="1"
+            offset={backgroundOffsetMiddle}
+            stopColor={backgroundGradientMiddle}
+            stopOpacity="1"
           />
           <Stop
-              offset={backgroundOffsetTo}
-              stopColor={backgroundGradientTo}
-              stopOpacity="1"
+            offset={backgroundOffsetTo}
+            stopColor={backgroundGradientTo}
+            stopOpacity="1"
           />
         </LinearGradient>
         {

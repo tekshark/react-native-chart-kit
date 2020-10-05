@@ -323,7 +323,7 @@ export interface ContributionGraphProps {
 
 export class ContributionGraph extends React.Component<
   ContributionGraphProps
-> {}
+  > {}
 
 // AbstractChart
 export class AbstractChart extends React.Component {}
@@ -384,6 +384,7 @@ export interface ChartConfig {
   propsForDots?: CircleProps;
   decimalPlaces?: number;
   style?: ViewStyle;
+  roundLabelTo?: number;
 
   /**
    * Define stroke line join type
