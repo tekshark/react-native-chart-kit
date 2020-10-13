@@ -7,6 +7,7 @@ import LineChart from "./src/line-chart";
 import PieChart from "./src/pie-chart";
 import ProgressChart from "./src/progress-chart";
 import BarChart from "./src/bar-chart";
+import BarChartHydro from "./src/bar-chart-hydro";
 import StackedBarChart from "./src/stackedbar-chart";
 import ContributionGraph from "./src/contribution-graph";
 import {
@@ -153,6 +154,14 @@ export default class App extends React.Component {
               />
               <Text style={labelStyle}>Bar Graph</Text>
               <BarChart
+                width={width}
+                height={height}
+                data={data}
+                yAxisLabel="$"
+                chartConfig={chartConfig}
+                style={graphStyle}
+              />
+              <BarChartHydro
                 width={width}
                 height={height}
                 data={data}
