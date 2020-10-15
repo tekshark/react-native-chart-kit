@@ -49,6 +49,18 @@ export interface LineChartProps {
    */
   data: LineChartData;
   /**
+   * Show custom label Y chart
+   */
+  yAxisCustomLabel?: string;
+  /**
+   * Show custom label on chart
+   */
+  customLabelBig?: string;
+  /**
+   * Show custom label on chart
+   */
+  customLabelSmall?: string;
+  /**
    * Width of the chart, use 'Dimensions' library to get the width of your screen for responsive.
    */
   width: number;

@@ -4,7 +4,8 @@ import {
   ScrollView,
   StyleSheet,
   Animated,
-  TextInput
+  TextInput,
+  Text
 } from "react-native";
 import {
   Svg,
@@ -61,6 +62,9 @@ class LineChart extends AbstractChart {
     const {
       getDotColor,
       hidePointsAtIndex = [],
+      customLabelSmall = "",
+      customLabelBig = "",
+      yAxisCustomLabel = "",
       renderDotContent = () => {
         return null;
       }
@@ -540,6 +544,9 @@ class LineChart extends AbstractChart {
           height={height + paddingBottom + legendOffset + freeOnTop}
           width={width - margin * 2 - marginRight}
         >
+          <Text style={{textAlign:'left', paddingLeft: paddingRight + 3, paddingTop: 0, fontSize:12, fontFamily: 'Montserrat'}}>{this.props.yAxisCustomLabel}</Text>
+          <Text style={{textAlign:'right', paddingRight: 10, paddingTop: 0, fontSize:20, fontFamily: 'Montserrat-bold'}}>{this.props.customLabelBig}</Text>
+          <Text style={{textAlign:'right', paddingRight: 10, paddingTop: 8, fontSize:12, fontFamily: 'Montserrat'}}>{this.props.customLabelSmall}</Text>
           <Rect
             width="100%"
             height={height + legendOffset + freeOnTop}
