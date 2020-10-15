@@ -517,7 +517,7 @@ class LineChart extends AbstractChart {
     const {
       borderRadius = 0,
       paddingTop = 16 + freeOnTop,
-      paddingRight = 64,
+      paddingRight = 40,
       margin = 0,
       marginRight = 0,
       paddingBottom = 0,
