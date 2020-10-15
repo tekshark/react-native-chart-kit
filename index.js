@@ -1,5 +1,6 @@
 import AbstractChart from "./src/abstract-chart";
 import LineChart from "./src/line-chart";
+import LineChartHydro from "./src/line-chart";
 import BarChart from "./src/bar-chart";
 import BarChartHydro from "./src/bar-chart-hydro";
 import PieChart from "./src/pie-chart";
@@ -12,6 +13,7 @@ export {
   BarChart,
   BarChartHydro,
   LineChart,
+  LineChartHydro,
   PieChart,
   ProgressChart,
   ContributionGraph,

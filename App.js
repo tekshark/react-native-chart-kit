@@ -4,6 +4,7 @@ import { ScrollView, StatusBar, Dimensions, Text } from "react-native";
 import ScrollableTabView from "react-native-scrollable-tab-view";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import LineChart from "./src/line-chart";
+import LineChartHydro from "./src/line-chart";
 import PieChart from "./src/pie-chart";
 import ProgressChart from "./src/progress-chart";
 import BarChart from "./src/bar-chart";
@@ -142,6 +143,25 @@ export default class App extends React.Component {
                 }
                 formatXLabel={label => label.toUpperCase()}
               />
+              <LineChartHydro
+                bezier
+                data={data}
+                width={width}
+                height={height}
+                yAxisLabel="$"
+                yAxisSuffix="k"
+                chartConfig={chartConfig}
+                style={graphStyle}
+                verticalLabelRotation={20}
+                onDataPointClick={({ value, getColor }) =>
+                  showMessage({
+                    message: `${value}`,
+                    description: "You selected this value",
+                    backgroundColor: getColor(0.9)
+                  })
+                }
+                formatXLabel={label => label.toUpperCase()}
+              />
               <FlashMessage duration={1000} />
               <Text style={labelStyle}>Progress Chart</Text>
               <ProgressChart
@@ -197,6 +217,14 @@ export default class App extends React.Component {
                 chartConfig={chartConfig}
                 style={graphStyle}
               />
+              <LineChartHydro
+                data={data}
+                width={width}
+                height={height}
+                yAxisLabel="$"
+                chartConfig={chartConfig}
+                style={graphStyle}
+              />
               <Text style={labelStyle}>Contribution Graph</Text>
               <ContributionGraph
                 values={contributionData}
@@ -209,6 +237,16 @@ export default class App extends React.Component {
               />
               <Text style={labelStyle}>Line Chart</Text>
               <LineChart
+                data={data}
+                width={width}
+                height={height}
+                yAxisLabel="$"
+                segments={5}
+                chartConfig={chartConfig}
+                style={graphStyle}
+                hidePointsAtIndex={[0, data.datasets[0].data.length - 1]}
+              />
+              <LineChartHydro
                 data={data}
                 width={width}
                 height={height}
@@ -233,9 +271,85 @@ export default class App extends React.Component {
                 style={graphStyle}
                 hidePointsAtIndex={[0, data.datasets[0].data.length - 1]}
               />
+              <LineChartHydro
+                bezier
+                data={data}
+                width={width}
+                height={height}
+                yAxisLabel="$"
+                segments={5}
+                chartConfig={{
+                  ...chartConfig,
+                  useShadowColorFromDataset: true
+                }}
+                style={graphStyle}
+                hidePointsAtIndex={[0, data.datasets[0].data.length - 1]}
+              />
 
               <Text style={labelStyle}>Scrollable Line Chart</Text>
               <LineChart
+                data={{
+                  labels: [
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June"
+                  ],
+                  datasets: [
+                    {
+                      data: [
+                        Math.random() * 100,
+                        Math.random() * 100,
+                        Math.random() * 100,
+                        Math.random() * 100,
+                        Math.random() * 100,
+                        Math.random() * 100,
+                        Math.random() * 100
+                      ]
+                    }
+                  ]
+                }}
+                width={Dimensions.get("window").width} // from react-native
+                height={220}
+                withInnerLines={false}
+                withDots={false}
+                withShadow={false}
+                withScrollableDot={true}
+                yAxisInterval={1} // optional, defaults to 1
+                chartConfig={{
+                  backgroundGradientFrom: "#1F1F1F",
+                  decimalPlaces: 2, // optional, defaults to 2dp
+                  color: (opacity = 1) => "#FF5500",
+                  labelColor: (opacity = 1) => "#A0A0A0",
+                  linejoinType: "round",
+
+                  scrollableDotFill: "#fff",
+                  scrollableDotRadius: 6,
+                  scrollableDotStrokeColor: "#FF5500",
+                  scrollableDotStrokeWidth: 3,
+
+                  scrollableInfoViewStyle: {
+                    justifyContent: "center",
+                    alignContent: "center",
+                    backgroundColor: "#121212",
+                    borderRadius: 2
+                  },
+                  scrollableInfoTextStyle: {
+                    color: "#C4C4C4",
+                    marginHorizontal: 4,
+                    flex: 1,
+                    textAlign: "center"
+                  },
+                  scrollableInfoSize: { width: 65, height: 30 },
+                  scrollableInfoOffset: 15
+                }}
+                style={{
+                  marginVertical: 8
+                }}
+              />
+              <LineChartHydro
                 data={{
                   labels: [
                     "January",
