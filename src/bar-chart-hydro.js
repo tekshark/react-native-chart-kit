@@ -78,6 +78,7 @@ class BarChartHydro extends AbstractChart {
             withInnerLines = true,
             showBarTops = true,
             segments = 4,
+            yAxisCustomLabel = "",
         } = this.props;
         const {borderRadius = 0, paddingTop = 16, paddingRight = 40} = style;
         const config = {
@@ -97,6 +98,7 @@ class BarChartHydro extends AbstractChart {
         return (
             <View style={style}>
                 <Svg height={height} width={width}>
+                    <Text style={{textAlign:'left', paddingLeft: paddingRight + 3, paddingTop: 0, fontSize:12, fontFamily: 'Montserrat'}}>{this.props.yAxisCustomLabel}</Text>
                     {this.renderDefs({
                         ...config,
                         ...this.props.chartConfig,
