@@ -558,7 +558,7 @@ class LineChartHydro extends AbstractChart {
           width={width - margin * 2 - marginRight}
         >
           <Text style={{textAlign:'left', paddingLeft: paddingRight + 3, paddingTop: 0, fontSize:12, fontFamily: 'Montserrat'}}>{this.props.yAxisCustomLabel}</Text>
-          <Text style={{textAlign:'right', paddingRight: 10, paddingTop: 0, fontSize:20, fontFamily: 'Montserrat-bold'}}>{this.props.customLabelBig}</Text>
+          <Text style={{textAlign:'right', paddingRight: 10, paddingTop: 0, fontSize:20, fontFamily: 'Montserrat-Bold'}}>{this.props.customLabelBig}</Text>
           <Text style={{textAlign:'right', paddingRight: 10, paddingTop: 8, fontSize:12, fontFamily: 'Montserrat'}}>{this.props.customLabelSmall}</Text>
           <Rect
             width="100%"
