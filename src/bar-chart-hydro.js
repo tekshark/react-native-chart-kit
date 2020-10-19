@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {Svg, Rect, G} from 'react-native-svg';
 import AbstractChart from './abstract-chart';
 
